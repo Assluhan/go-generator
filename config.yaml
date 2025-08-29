@@ -1,0 +1,46 @@
+# 代码生成器配置文件
+database:
+  host: "localhost"
+  port: 3306
+  user: "root"
+  password: "123456"
+  database: "test_db"
+
+output:
+  path: "internal/models"
+  package: "models"
+
+# 可选：指定要生成的表名，多个表用逗号分隔
+# 如果不指定，则生成所有表
+# tables: "users,articles,comments"
+
+# 生成选项
+options:
+  # 是否生成基础模型
+  generate_base_model: true
+  # 是否使用软删除
+  use_soft_delete: true
+  # 是否生成 JSON 标签
+  generate_json_tags: true
+  # 是否生成 GORM 标签
+  generate_gorm_tags: true
+  # 是否生成注释
+  generate_comments: true
+  # 是否生成 Router 代码
+  generate_router: true
+  # 是否生成 Service 代码
+  generate_service: true
+
+# Router 输出配置
+router:
+  output: "internal/router"
+
+# Service 输出配置
+service:
+  output: "internal/services"
+
+# 生成代码中的导入路径（供其他项目指定）
+imports:
+  model: "github.com/your/app/internal/models"
+  service: "github.com/your/app/internal/services"
+  storage: "github.com/your/app/internal/storage"
