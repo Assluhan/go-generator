@@ -30,8 +30,14 @@ type Config struct {
 	RouterOutput    string
 	ServiceOutput   string
 	// 生成代码所需的导入路径
+	// ModelImportPath 指向生成的模型包导入路径（用于在 Router/Service 中引用模型）。
+	// 例如: "github.com/your/app/internal/models"
 	ModelImportPath   string
+	// ServiceImportPath 指向服务层包的导入路径（用于在 Router 中引用服务）。
+	// 例如: "github.com/your/app/internal/services"
 	ServiceImportPath string
+	// StorageImportPath 指向存储层包的导入路径根（用于在 Service 中引用存储实现，如 DAO/Repository）。
+	// 例如: "github.com/your/app/internal/storage"
 	StorageImportPath string
 }
 
