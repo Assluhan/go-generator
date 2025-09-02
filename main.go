@@ -4,32 +4,30 @@ import (
 	"flag"
 	"fmt"
 	"log"
-	"os"
-	"path/filepath"
 
-	"go-web/cmd/generator/generator"
+	generator "github.com/you/generator/config"
 )
 
 func main() {
 	// 命令行参数
 	var (
-		host           = flag.String("host", "", "数据库主机")
-		port           = flag.Int("port", 0, "数据库端口")
-		user           = flag.String("user", "", "数据库用户名")
-		password       = flag.String("password", "", "数据库密码")
-		database       = flag.String("database", "", "数据库名")
-		output         = flag.String("output", "", "输出目录")
-		tables         = flag.String("tables", "", "指定表名，多个表用逗号分隔，为空则生成所有表")
-		package        = flag.String("package", "", "生成的包名")
-		configFile     = flag.String("config", "config.yaml", "配置文件路径")
-		generateRouter = flag.Bool("router", false, "是否生成Router代码")
+		host            = flag.String("host", "", "数据库主机")
+		port            = flag.Int("port", 0, "数据库端口")
+		user            = flag.String("user", "", "数据库用户名")
+		password        = flag.String("password", "", "数据库密码")
+		database        = flag.String("database", "", "数据库名")
+		output          = flag.String("output", "", "输出目录")
+		tables          = flag.String("tables", "", "指定表名，多个表用逗号分隔，为空则生成所有表")
+		pkgName         = flag.String("package", "", "生成的包名")
+		configFile      = flag.String("config", "config.yaml", "配置文件路径")
+		generateRouter  = flag.Bool("router", false, "是否生成Router代码")
 		generateService = flag.Bool("service", false, "是否生成Service代码")
-		routerOutput   = flag.String("router-output", "", "Router输出目录")
-		serviceOutput  = flag.String("service-output", "", "Service输出目录")
-		modelImport    = flag.String("model-import", "", "模型包导入路径，例如: github.com/your/app/internal/models")
-		serviceImport  = flag.String("service-import", "", "服务包导入路径，例如: github.com/your/app/internal/services")
-		storageImport  = flag.String("storage-import", "", "存储包导入路径根，例如: github.com/your/app/internal/storage")
-		help           = flag.Bool("help", false, "显示帮助信息")
+		routerOutput    = flag.String("router-output", "", "Router输出目录")
+		serviceOutput   = flag.String("service-output", "", "Service输出目录")
+		modelImport     = flag.String("model-import", "", "模型包导入路径，例如: github.com/your/app/internal/models")
+		serviceImport   = flag.String("service-import", "", "服务包导入路径，例如: github.com/your/app/internal/services")
+		storageImport   = flag.String("storage-import", "", "存储包导入路径根，例如: github.com/your/app/internal/storage")
+		help            = flag.Bool("help", false, "显示帮助信息")
 	)
 	flag.Parse()
 
@@ -47,18 +45,18 @@ func main() {
 
 	// 创建命令行配置
 	cmdConfig := &generator.Config{
-		Host:            *host,
-		Port:            *port,
-		User:            *user,
-		Password:        *password,
-		Database:        *database,
-		Output:          *output,
-		Package:         *package,
-		Tables:          *tables,
-		GenerateRouter:  *generateRouter,
-		GenerateService: *generateService,
-		RouterOutput:    *routerOutput,
-		ServiceOutput:   *serviceOutput,
+		Host:              *host,
+		Port:              *port,
+		User:              *user,
+		Password:          *password,
+		Database:          *database,
+		Output:            *output,
+		Package:           *pkgName,
+		Tables:            *tables,
+		GenerateRouter:    *generateRouter,
+		GenerateService:   *generateService,
+		RouterOutput:      *routerOutput,
+		ServiceOutput:     *serviceOutput,
 		ModelImportPath:   *modelImport,
 		ServiceImportPath: *serviceImport,
 		StorageImportPath: *storageImport,
@@ -90,7 +88,7 @@ func main() {
 
 func showHelp() {
 	fmt.Println("GORM 代码生成器")
-	fmt.Println("用法: go run cmd/generator/main.go [选项]")
+	fmt.Println("用法: go run main.go [选项]")
 	fmt.Println()
 	fmt.Println("选项:")
 	fmt.Println("  -host string")
@@ -129,8 +127,8 @@ func showHelp() {
 	fmt.Println("        显示帮助信息")
 	fmt.Println()
 	fmt.Println("示例:")
-	fmt.Println("  go run cmd/generator/main.go -database test_db -password 123456")
-	fmt.Println("  go run cmd/generator/main.go -database test_db -tables users,articles -output ./models")
-	fmt.Println("  go run cmd/generator/main.go -database test_db -password 123456 -router -service")
-	fmt.Println("  go run cmd/generator/main.go -database test_db -password 123456 -router -service -tables users,articles")
+	fmt.Println("  go run main.go -database test_db -password 123456")
+	fmt.Println("  go run main.go -database test_db -tables users,articles -output ./models")
+	fmt.Println("  go run main.go -database test_db -password 123456 -router -service")
+	fmt.Println("  go run main.go -database test_db -password 123456 -router -service -tables users,articles")
 }

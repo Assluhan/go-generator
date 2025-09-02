@@ -9,7 +9,6 @@ import (
 	"regexp"
 	"strings"
 	"text/template"
-	"time"
 
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -32,7 +31,7 @@ type Config struct {
 	// 生成代码所需的导入路径
 	// ModelImportPath 指向生成的模型包导入路径（用于在 Router/Service 中引用模型）。
 	// 例如: "github.com/your/app/internal/models"
-	ModelImportPath   string
+	ModelImportPath string
 	// ServiceImportPath 指向服务层包的导入路径（用于在 Router 中引用服务）。
 	// 例如: "github.com/your/app/internal/services"
 	ServiceImportPath string
@@ -77,7 +76,7 @@ func NewGenerator(config *Config) *Generator {
 	if config.ServiceOutput == "" {
 		config.ServiceOutput = filepath.Join(config.Output, "../services")
 	}
-	
+
 	return &Generator{
 		config: config,
 	}
@@ -419,7 +418,6 @@ func (g *Generator) generateBaseModel() error {
 	tmpl := `package {{.Package}}
 
 import (
-	"time"
 	"gorm.io/gorm"
 )
 
@@ -505,9 +503,9 @@ func (g *Generator) prepareColumns(columns []ColumnInfo) []map[string]interface{
 	var result []map[string]interface{}
 	for _, col := range columns {
 		result = append(result, map[string]interface{}{
-			"GoName": g.toCamelCase(col.Name),
-			"GoType": col.GoType,
-			"GoTag":  col.GoTag,
+			"GoName":  g.toCamelCase(col.Name),
+			"GoType":  col.GoType,
+			"GoTag":   col.GoTag,
 			"Comment": col.Comment,
 		})
 	}

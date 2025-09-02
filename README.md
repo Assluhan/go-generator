@@ -2,12 +2,50 @@
 
 一个可复用的 MySQL -> GORM 代码生成器，支持生成 Model、Service、Router（Gin）代码，并允许自定义生成代码中各层的导入路径，方便在任何项目中落地。
 
-## 安装与导入
+## 安装
 
-- 作为可执行命令使用（推荐在你自己的项目根目录执行）：
+### 方式一：通过 go get 安装（推荐）
+
+#### 安装最新版本
 ```bash
-# 在你的项目根目录
-go run ./cmd/generator/main.go -database your_db -user root -password 123456 \
+go install github.com/you/generator@latest
+```
+
+#### 安装特定版本
+```bash
+go install github.com/you/generator@v1.0.0
+```
+
+```bash
+go install github.com/you/generator@latest
+```
+
+安装后，你可以在任何地方使用 `generator` 命令：
+
+```bash
+generator -database your_db -user root -password 123456 \
+  -output internal/models -package models \
+  -router -service \
+  -router-output internal/router -service-output internal/services \
+  -model-import github.com/you/yourapp/internal/models \
+  -service-import github.com/you/yourapp/internal/services \
+  -storage-import github.com/you/yourapp/internal/storage
+```
+
+### 方式二：作为可执行命令使用
+
+```bash
+# 运行最新版本
+go run github.com/you/generator@latest -database your_db -user root -password 123456 \
+  -output internal/models -package models \
+  -router -service \
+  -router-output internal/router -service-output internal/services \
+  -model-import github.com/you/yourapp/internal/models \
+  -service-import github.com/you/yourapp/internal/services \
+  -storage-import github.com/you/yourapp/internal/storage
+
+# 运行特定版本
+go run github.com/you/generator@v1.0.0 -database your_db -user root -password 123456 \
   -output internal/models -package models \
   -router -service \
   -router-output internal/router -service-output internal/services \
@@ -103,6 +141,12 @@ imports:
   - `internal/storage/mysql` 包并暴露 `DB *gorm.DB`
   - `internal/models`、`internal/services`、`internal/router` 目录（可根据需要调整）
 - 在运行生成器时，传入上述目录对应的导入路径，生成代码会直接可用。
+
+## 版本信息
+
+当前版本：`v1.0.0`
+
+查看 [CHANGELOG.md](CHANGELOG.md) 了解详细版本变更。
 
 ## 许可证
 
